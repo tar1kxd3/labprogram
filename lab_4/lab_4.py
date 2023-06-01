@@ -1,29 +1,57 @@
 import os
 
-while True:
-    file_path = input("Enter the path to the file: ")
+def count_lines(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+        return len(lines)
 
-    if not os.path.exists(file_path):
-        print("File not found!")
-        continue
+def count_empty_lines(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+        empty_lines = 0
+        for line in lines:
+            if line.strip() == '':
+                empty_lines += 1
+        return empty_lines
 
-    with open(file_path, 'r') as file:
-        content = file.readlines()
+def count_z_lines(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+        z_lines = 0
+        for line in lines:
+            if 'z' in line:
+                z_lines += 1
+        return z_lines
 
-    
-    total_lines = len(content)
-    empty_lines = content.count('\n')
-    lines_with_h = sum('h' in line for line in content)
-    h_count = sum(line.count('h') for line in content)
-    lines_with_will = sum('will' in line for line in content)
+def count_z_letters(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+        z_count = 0
+        for line in lines:
+            z_count += line.count('z')
+        return z_count
 
-    print(f"\nFile: {file_path}")
-    print(f"total lines: {total_lines}")
-    print(f"empty lines: {empty_lines}")
-    print(f"lines with \"h\": {lines_with_h}")
-    print(f"\"h\" count: {h_count}")
-    print(f"lines with \"will\": {lines_with_will}")
+def count_and_lines(filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+        and_lines = 0
+        for line in lines:
+            if 'and' in line:
+                and_lines += 1
+        return and_lines
 
-    answer = input("Do you want to analyze another file? (y/n): ")
-    if answer.lower() != 'y':
-        break
+def print_statistics(filename):
+    print('File:', filename)
+    print(' total lines:', count_lines(filename))
+    print(' empty lines:', count_empty_lines(filename))
+    print(' lines with "z":', count_z_lines(filename))
+    print(' "z" count":', count_z_letters(filename))
+    print(' lines with "and":', count_and_lines(filename))
+
+if __name__ == '__main__':
+    while True:
+        filename = input('Enter file path: ')
+        print_statistics(filename)
+        choice = input('Do you want to analyze another file? (y/n): ')
+        if choice.lower() == 'n':
+            break
